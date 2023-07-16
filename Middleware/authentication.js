@@ -2,7 +2,7 @@ const jwt =require('jsonwebtoken')
 const UserModel = require('../Model/UserModel')
 const blacklist = require('../Model/BlackList')
 
-require('dotenv').config()
+// require('dotenv').config()
 
 const authentication =async(req,res,next)=>{
     try {
@@ -10,7 +10,7 @@ const authentication =async(req,res,next)=>{
         if(blacklist.includes(token)){
             res.send({msg:"got to login again your token expired !!"})
         }
-        const decoded= jwt.verify(token,process.env.SECRET_KEY)
+        const decoded= jwt.verify(token,"BOSS")
         console.log(decoded)
         const {userID}=decoded;
         const userExist = await UserModel.findById(userID)

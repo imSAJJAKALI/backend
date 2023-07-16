@@ -4,7 +4,7 @@ const connection = require('./db');
 const cors = require('cors');
 const UserRouter = require('./Routes/UserRouter');
 
-dotenv.config();
+// dotenv.config();
 
 const app = express();
 
@@ -13,12 +13,12 @@ app.use(cors());
 
 app.use(UserRouter); // Prefix your routes with '/api'
 
-app.listen(process.env.PORT, async () => {
+app.listen(8090, async () => {
   try {
     await connection
     console.log('Database connected successfully');
   } catch (error) {
     console.log('DB not connected:', error);
   }
-  console.log('Server running on port', process.env.PORT);
+  console.log('Server running on port', "8090");
 });
