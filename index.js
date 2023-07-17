@@ -7,7 +7,7 @@ const cors=require('cors')
 // const Authentication = require('./Middleware/Authentication')
 // const {getPosts, createPost, updatePost, deletePost}= require('./Routes/PostRoutes')
 const router = require('./Routes/router')
-dotenv.config()
+// dotenv.config()
 const app=express()
 app.use(cors())
 app.use(express.json())
@@ -16,7 +16,7 @@ app.use('/users',UserRouter)
 
 app.use('/post',router)
 
-app.listen(process.env.PORT,async()=>{
+app.listen(8080,async()=>{
 
     try {
         await connection

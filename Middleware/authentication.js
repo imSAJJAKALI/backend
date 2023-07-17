@@ -1,12 +1,12 @@
 const jwt= require('jsonwebtoken')
 const UserModel= require('../Model/UserModel')
 
-require('dotenv').config()
+// require('dotenv').config()
 
 const Authentication=async(req,res,next)=>{
     try {
         const token=req.headers.authorization.split(' ')
-        const decoded=jwt.verify(token,process.env.SECRET_KEY)
+        const decoded=jwt.verify(token,"evaluation")
         const {userID}=decoded;
         const userExist=await UserModel.findByID(userID)
         if(!userExist){

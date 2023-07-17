@@ -3,7 +3,7 @@ const UserModel=require('../Model/UserModel')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 
-require('dotenv').config()
+// require('dotenv').config()
 
 const UserRouter=express.Router()
 
@@ -30,7 +30,7 @@ UserRouter.post('/login',async(req,res)=>{
         const {email,password}=req.body;
         const userExist= await UserModel.findOne({email})
         if(userExist){
-            var token=jwt.sign({userID:userExist._id},process.env.SECRET_KEY)
+            var token=jwt.sign({userID:userExist._id},"evaluation")
             res.status(200).json({msg:"User Logged in Successfull",token})
         }else{
             res.status(200).json({msg:"Incorrect Password"})
