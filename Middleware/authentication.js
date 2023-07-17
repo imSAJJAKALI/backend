@@ -1,30 +1,22 @@
-const jwt =require('jsonwebtoken')
-const UserModel = require('../Model/UserModel')
-const blacklist = require('../Model/BlackList')
+const jwt= require('jsonwebtoken')
+const UserModel= require('../Model/UserModel')
 
-// require('dotenv').config()
+require('dotenv').config()
 
-const authentication =async(req,res,next)=>{
+const Authentication=async(req,res,next)=>{
     try {
-        const token = req.headers.authorization;
-        if(blacklist.includes(token)){
-            res.send({msg:"got to login again your token expired !!"})
-        }
-        const decoded= jwt.verify(token,"BOSS")
-        console.log(decoded)
+        const token=req.headers.authorization.split(' ')
+        const decoded=jwt.verify(token,process.env.SECRET_KEY)
         const {userID}=decoded;
-        const userExist = await UserModel.findById(userID)
+        const userExist=await UserModel.findByID(userID)
         if(!userExist){
-            res.send({msg:"unathorized banda "})
+            res.send({msg:"Unathorized person"})
         }
-        req.userExist=userExist
+        res.userExist=userExist
         next()
-        
     } catch (error) {
-        res.send({msg:error})
+        res.send({msg:"error"})
     }
 }
 
-module.exports=authentication;
-
-
+module.exports=Authentication;

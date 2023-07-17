@@ -1,24 +1,28 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const connection = require('./db');
-const cors = require('cors');
-const UserRouter = require('./Routes/UserRouter');
+const express=require('express')
+const dotenv=require('dotenv')
+const connection =require('./db')
+const UserRouter=require('./Routes/UserRoutes')
+const cors=require('cors')
 
-// dotenv.config();
+// const Authentication = require('./Middleware/Authentication')
+// const {getPosts, createPost, updatePost, deletePost}= require('./Routes/PostRoutes')
+const router = require('./Routes/router')
+dotenv.config()
+const app=express()
+app.use(cors())
+app.use(express.json())
 
-const app = express();
+app.use('/users',UserRouter)
 
-app.use(express.json()); // Add this middleware to parse incoming JSON data in request bodies
-app.use(cors());
+app.use('/post',router)
 
-app.use(UserRouter); // Prefix your routes with '/api'
+app.listen(process.env.PORT,async()=>{
 
-app.listen(8090, async () => {
-  try {
-    await connection
-    console.log('Database connected successfully');
-  } catch (error) {
-    console.log('DB not connected:', error);
-  }
-  console.log('Server running on port', "8090");
-});
+    try {
+        await connection
+        console.log('connected to db')
+    } catch (error) {
+        console.log(error)
+    }
+    console.log('server running ')
+})
